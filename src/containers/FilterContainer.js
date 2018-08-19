@@ -1,6 +1,6 @@
 import React from 'react'
 import { Input } from 'semantic-ui-react';
-import {filterByType, filterByName } from '../actions/Lists.actions'
+import {filterByType, filterByName } from '../actions/Exercises.actions'
 import { connect } from 'react-redux'
 
 class FilterContainer extends React.Component {

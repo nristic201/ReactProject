@@ -1,6 +1,6 @@
 import React from 'react'
 import  Day  from './Day';
-export class CalendarContainer extends React.Component {
+export default class CalendarContainer extends React.Component {
     constructor() {
         super()
         this.state = {

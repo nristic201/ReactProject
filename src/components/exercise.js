@@ -1,6 +1,6 @@
 import React from 'react'
 import { Card,Image, Grid, Container, List } from 'semantic-ui-react';
-import { addExercise } from '../actions/Lists.actions'
+import { addExercise } from '../actions/Workout.actions'
 import { connect } from 'react-redux'
 
 class Exercise extends React.Component {

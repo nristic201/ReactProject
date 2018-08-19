@@ -1,4 +1,6 @@
-import { ADD_EXERCISE, REMOVE_EXERCISE, ADD_TO_FAVORITES, GYM_FETCH_SUCCESS, FILTER_BY_TYPE, FILTER_BY_NAME } from "../actions/Lists.actions";
+import { ADD_EXERCISE, REMOVE_EXERCISE } from "../actions/Workout.actions";
+import { ADD_TO_FAVORITES, LOAD_FAVORITES, REMOVE_FROM_FAVORITES } from "../actions/Favorites.actions";
+import { GYM_FETCH_SUCCESS, FILTER_BY_TYPE, FILTER_BY_NAME } from "../actions/Exercises.actions";
 
 const initialState = {
     favorites: [],
@@ -69,6 +71,18 @@ export const ListsReducer = (state = initialState, action) => {
             return {
                 ...state,
                 filtered: state.exercises
+            }
+        }
+        case LOAD_FAVORITES:{
+            return {
+                ...state,
+                favorites:action.payload
+            }
+        }
+        case REMOVE_FROM_FAVORITES:{
+            return {
+                ...state,
+                favorites:state.favorites.filter(el=>el.name!==action.payload)
             }
         }
         default: return state;
