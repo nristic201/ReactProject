@@ -1,16 +1,15 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { WorkOutList } from '../components/WorkOutList';
-import { favoritesSaveRequest,removeFromFavorites } from '../actions/Favorites.actions';
+import { removeFromFavorites } from '../actions/Favorites.actions';
 import { Popup, Button, Label, Menu } from 'semantic-ui-react';
 class FavoritesContainer extends Component {
     handleClick = (name) => {
-        const {removeFromFavorites,favoritesSaveRequest,favorites} = this.props
+        const { removeFromFavorites, favoritesSaveRequest, favorites } = this.props
         removeFromFavorites(name)
-        favoritesSaveRequest(1,favorites)
     }
     renderList = () => {
-        if (this.props.favorites.length > 0)
+        if (this.props.favorites.length > 0) {
             return this.props.favorites.map(el => {
                 return (
                     <Label>
@@ -23,15 +22,12 @@ class FavoritesContainer extends Component {
                                 <ShowList list={el.list} />
                             </Menu>
                         </Popup>
-                        <Button content='remove' onClick={()=>this.handleClick(el.name)} />
+                        <Button content='remove' onClick={() => this.handleClick(el.name)} />
                     </Label>)
             })
+        }
     }
     render() {
-        console.log(this.props.favorites)
-        if (this.props.favorites.length > 0) {
-            this.props.favoritesSaveRequest(1, this.props.favorites)
-        }
         return (
             <div className='favorites-container'>
                 <h2>FavoritesContainer </h2>
@@ -55,6 +51,6 @@ const mapStateToProps = (state) => (
     }
 )
 
-export default connect(mapStateToProps, { favoritesSaveRequest, removeFromFavorites })(FavoritesContainer)
+export default connect(mapStateToProps, {removeFromFavorites })(FavoritesContainer)
 
 

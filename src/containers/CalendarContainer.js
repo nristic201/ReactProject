@@ -1,6 +1,7 @@
 import React from 'react'
-import  Day  from './Day';
-export default class CalendarContainer extends React.Component {
+import Day from './Day';
+import { connect } from 'react-redux'
+class CalendarContainer extends React.Component {
     constructor() {
         super()
         this.state = {
@@ -27,16 +28,35 @@ export default class CalendarContainer extends React.Component {
         )
     }
     renderDays = () => {
-        return this.state.calendar.map(el =>
-            <Day data={el} />
+        const ca = this.props.calendarAttachments
+        return this.state.calendar.map(el => {
+            let p = ca.filter(element => {
+                return element.date.toDateString() === el.toDateString()
+            });
+            if (p.length > 0)
+                return <Day data={p[0]}/>
+            else return <Day data={{
+                date:el,
+                name:null,
+                list:null
+            }}/>
+        }
         )
     }
     render() {
         return (
             <div className='calendar'>
                 <div className='calendar-header'>{this.renderHeader()}</div>
-                    <div className='calendar-week'>{this.renderDays()}</div>
+                <div className='calendar-week'>{this.renderDays()}</div>
             </div>
         )
     }
 }
+
+const mapStateToProps = (state) => {
+    return {
+        calendarAttachments: state.calendarAttachments
+    }
+}
+
+export default connect(mapStateToProps)(CalendarContainer)

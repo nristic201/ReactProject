@@ -19,13 +19,37 @@ export const fetchGymExercises = async () => {
     }
 }
 
-export const SaveToFavorites = async (id, data) => {
+export const SaveFavoritesInDatabase = async (id, data) => {
     const userReq = await fetch('http://localhost:4000/users?id=' + id)
     const userRes=  await userReq.json()
     if (userRes[0]) {
         let updateUser = {
             ...userRes[0],
             favorites: data
+        }
+
+        const req = await fetch("http://localhost:4000/users/"+id, {
+            method: 'PUT',
+            headers: {
+                'content-type': 'application/json'
+            },
+            body: JSON.stringify(updateUser)
+        })
+        console.log(updateUser)
+        const res = await req.json();
+        console.log(res)
+        return res
+    }
+    else return null
+}
+
+export const SaveAttachmentsInDatabase = async (id, data) => {
+    const userReq = await fetch('http://localhost:4000/users?id=' + id)
+    const userRes=  await userReq.json()
+    if (userRes[0]) {
+        let updateUser = {
+            ...userRes[0],
+            calendarAttachments: data
         }
 
         const req = await fetch("http://localhost:4000/users/"+id, {

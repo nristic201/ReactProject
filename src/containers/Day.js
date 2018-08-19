@@ -2,6 +2,7 @@
 import React from 'react'
 import { Button, Popup, Menu, Label } from 'semantic-ui-react';
 import { connect } from 'react-redux'
+import { attachToCalendar } from '../actions/calendar.actions'
 class Day extends React.Component {
     constructor(props) {
         super(props)
@@ -15,6 +16,18 @@ class Day extends React.Component {
             todayWorkout: null
         }
     }
+    componentWillMount() {
+        const { date, name, list } = this.props.data
+        this.setState({
+            todayWorkout: this.props.data,
+            labelStyle: {
+                display: name ? 'block' : 'none'
+            },
+            buttonStyle: {
+                display: name ? 'none' : 'block'
+            }
+        })
+    }
     handleClick = (element) => {
         this.setState({
             buttonStyle: {
@@ -24,8 +37,13 @@ class Day extends React.Component {
                 display: 'block'
             },
             todayWorkout: element
-        })
-        console.log(element)
+        },
+            () => this.props.attachToCalendar({
+                ...this.state.todayWorkout,
+                date: this.props.data.date
+            })
+
+        )
     }
     renderList = () => {
         if (this.props.favorites.length > 0) {
@@ -38,7 +56,6 @@ class Day extends React.Component {
                     </Menu.Item>
                 ))
             )
-
         }
         else {
             return <h3>empty list</h3>
@@ -47,7 +64,7 @@ class Day extends React.Component {
     render() {
         return (
             <div className='calendar-day'>
-                {this.props.data.getDate()}
+                {this.props.data.date.getDate()}
                 <div className='day-content' >
                     <Popup trigger={<Button content='Add Workout' icon='add' style={this.state.buttonStyle} />}
                         flowing
@@ -55,7 +72,7 @@ class Day extends React.Component {
                     >
                         <Menu vertical>{this.renderList()}</Menu>
                     </Popup>
-                    <Label style={this.state.labelStyle} content={this.state.todayWorkout ? this.state.todayWorkout.name : 'none'} />
+                    <Label style={this.state.labelStyle} color='teal' content={this.state.todayWorkout ? this.state.todayWorkout.name : 'none'} />
                 </div>
             </div >
         )
@@ -66,4 +83,4 @@ const mapStateToProps = (state) => {
         favorites: state.lists.favorites
     }
 }
-export default connect(mapStateToProps)(Day)
+export default connect(mapStateToProps, { attachToCalendar })(Day)

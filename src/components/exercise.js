@@ -1,5 +1,5 @@
 import React from 'react'
-import { Card,Image, Grid, Container, List } from 'semantic-ui-react';
+import { Card, Image, Grid, Container, List,Menu } from 'semantic-ui-react';
 import { addExercise } from '../actions/Workout.actions'
 import { connect } from 'react-redux'
 
@@ -34,25 +34,28 @@ class Exercise extends React.Component {
         const { data, type } = this.props
         if (type === 'workoutList')
             return (
-                <List.Item>
-                    {/* <List.Header as='h2' content={data.name} /> */}
-                    <h5>{data.name}
-                        {/* <List.Description>
-                        <Label >
-                            Sets
-                            <Button circular size='mini' color='blue' icon='plus' />
-                            <Button circular size='mini'color='red' icon='minus' />
-                        </Label>
-                        <Label color='yellow'>
-                            Repeats
-                            <Label.Detail >{data.repeats}
-                                <Icon name='plus square' onClick={this.Increment} />
-                                <Icon name='minus square' onClick={this.Decrement} />
-                            </Label.Detail>
-                        </Label> */}
-                    </h5>
-                    {/* </List.Description> */}
-                </List.Item>
+                <Menu.Item >
+                    {data.name}
+                </Menu.Item>
+                //     <List.Item>
+                //         {/* <List.Header as='h2' content={data.name} /> */}
+                //         {/* <h5>{data.name} */}
+                //             {/* <List.Description>
+                //             <Label >
+                //                 Sets
+                //                 <Button circular size='mini' color='blue' icon='plus' />
+                //                 <Button circular size='mini'color='red' icon='minus' />
+                //             </Label>
+                //             <Label color='yellow'>
+                //                 Repeats
+                //                 <Label.Detail >{data.repeats}
+                //                     <Icon name='plus square' onClick={this.Increment} />
+                //                     <Icon name='minus square' onClick={this.Decrement} />
+                //                 </Label.Detail>
+                //             </Label> */}
+                //         {/* </h5> */}
+                //         {/* </List.Description> */}
+                //     </List.Item>
             )
         else
             return (

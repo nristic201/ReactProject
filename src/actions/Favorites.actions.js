@@ -39,6 +39,5 @@ export const removeFromFavorites = (name) => {
     return {
         type: REMOVE_FROM_FAVORITES,
         payload: name
-
     }
 }
