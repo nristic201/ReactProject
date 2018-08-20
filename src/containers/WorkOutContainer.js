@@ -1,13 +1,12 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { WorkOutList } from '../components/WorkOutList'
-import { addToFavorites } from '../actions/Favorites.actions';
-import { CustomModal } from '../components/CustomModal';
+import { addToFavorites, favoritesSaveRequest } from '../actions/Favorites.actions';
 import { Button, Input, Message } from 'semantic-ui-react';
 import FavoritesContainer from './FavoritesContainer';
 import ExercisesContainer from './ExercisesContainer';
 import FilterContainer from './FilterContainer';
-import { attachToCalendar } from '../actions/calendar.actions'
+import { attachToCalendarReq } from '../actions/calendar.actions'
 
 class WorkOutContainer extends React.Component {
     constructor() {
@@ -34,7 +33,7 @@ class WorkOutContainer extends React.Component {
     }
     handleClick = () => {
         if (this.preventEmpty()) {
-            const { workout, addToFavorites } = this.props
+            const { user, favorites, workout, favoritesSaveRequest, addToFavorites } = this.props
             addToFavorites(workout, this.state.name)
             this.setState({
                 error: null
@@ -43,11 +42,14 @@ class WorkOutContainer extends React.Component {
     }
     handleClick2 = () => {
         if (this.preventEmpty()) {
-            this.props.attachToCalendar({
-                date: new Date(),
-                name: this.state.name,
-                list: this.props.workout
-            })
+            this.props.attachToCalendarReq(
+                this.props.user.id,
+                {
+                    date: new Date(),
+                    name: this.state.name,
+                    list: this.props.workout
+                }
+            )
             this.setState({
                 error: null
             })
@@ -87,8 +89,10 @@ class WorkOutContainer extends React.Component {
 const mapStateToProps = (state) => {
     return {
         workout: state.lists.workout,
-        user: state.user
+        user: state.user,
+        favorites: state.lists.favorites,
+        calendarAttachments: state.calendarAttachments
     }
 }
 
-export default connect(mapStateToProps, { addToFavorites, attachToCalendar })(WorkOutContainer)
+export default connect(mapStateToProps, { addToFavorites, attachToCalendarReq, favoritesSaveRequest })(WorkOutContainer)

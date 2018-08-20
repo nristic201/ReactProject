@@ -19,49 +19,80 @@ export const fetchGymExercises = async () => {
     }
 }
 
-export const SaveFavoritesInDatabase = async (id, data) => {
+export const SaveFavoritesInDatabase = async (id, obj) => {
     const userReq = await fetch('http://localhost:4000/users?id=' + id)
-    const userRes=  await userReq.json()
+    const userRes = await userReq.json()
     if (userRes[0]) {
         let updateUser = {
             ...userRes[0],
-            favorites: data
+            favorites: [...userRes.favorites, obj]
         }
 
-        const req = await fetch("http://localhost:4000/users/"+id, {
+        const req = await fetch("http://localhost:4000/users/" + id, {
             method: 'PUT',
             headers: {
                 'content-type': 'application/json'
             },
             body: JSON.stringify(updateUser)
         })
-        console.log(updateUser)
         const res = await req.json();
-        console.log(res)
         return res
     }
     else return null
 }
 
-export const SaveAttachmentsInDatabase = async (id, data) => {
+export const UpdateDatabaseAfterADD = async (id, obj) => {
     const userReq = await fetch('http://localhost:4000/users?id=' + id)
-    const userRes=  await userReq.json()
+    const userRes = await userReq.json()
+
+    const p = userRes[0].calendarAttachments;
+    let pom = p.filter(element => {
+        return element.date.slice(0, 10) === obj.name.slice(0, 10)
+    })
+    if (pom.length > 0)
+        return null
     if (userRes[0]) {
         let updateUser = {
             ...userRes[0],
-            calendarAttachments: data
+            calendarAttachments: [...userRes[0].calendarAttachments, obj]
         }
 
-        const req = await fetch("http://localhost:4000/users/"+id, {
+        const req = await fetch("http://localhost:4000/users/" + id, {
             method: 'PUT',
             headers: {
                 'content-type': 'application/json'
             },
             body: JSON.stringify(updateUser)
         })
-        console.log(updateUser)
         const res = await req.json();
-        console.log(res)
+        return res
+    }
+    else return null
+}
+
+
+
+export const UpdateDatabaseAfterDEL = async (id, obj) => {
+    const userReq = await fetch('http://localhost:4000/users?id=' + id)
+    const userRes = await userReq.json()
+
+    const p = userRes[0].calendarAttachments;
+    let pom = p.filter(el => el.date.slice(0, 10) !== obj.date.slice(0, 10))
+    console.log(pom)
+    if (userRes[0]) {
+        let updateUser = {
+            ...userRes[0],
+            calendarAttachments: pom
+        }
+
+        const req = await fetch("http://localhost:4000/users/" + id, {
+            method: 'PUT',
+            headers: {
+                'content-type': 'application/json'
+            },
+            body: JSON.stringify(updateUser)
+        })
+        const res = await req.json();
         return res
     }
     else return null

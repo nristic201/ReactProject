@@ -1,6 +1,6 @@
 import { createStore, applyMiddleware } from 'redux'
 import createSagaMiddleware from 'redux-saga'
-import {watcherUserLogin, watcherGymFetch, watcherSaveFavorites} from '../saga/index'
+import {watcherUserLogin, watcherGymFetch, watcherSaveFavorites, watcherSaveAttachments, watcherAttachToCalendar, watcherRemoveFromCalendar} from '../saga/index'
 import rootreducer from '../reducers/root.reducer';
 
 
@@ -14,5 +14,6 @@ const store = createStore(
 sagaMiddleware.run(watcherUserLogin)
 sagaMiddleware.run(watcherGymFetch)
 sagaMiddleware.run(watcherSaveFavorites)
-
+sagaMiddleware.run(watcherAttachToCalendar)
+sagaMiddleware.run(watcherRemoveFromCalendar)
 export default store

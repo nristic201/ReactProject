@@ -1,4 +1,4 @@
-import { SUCCESSFUL_LOGIN, FAILED_LOGIN } from "../actions/users.action";
+import { SUCCESSFUL_LOGIN, FAILED_LOGIN, LOG_OUT } from "../actions/users.action";
 
 
 export default function(state = null, action)
@@ -11,6 +11,7 @@ export default function(state = null, action)
             return {
                 msg: "wrong email/password"
             }
+        case LOG_OUT: return null
         default: return state;
     }
 }

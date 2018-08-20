@@ -2,11 +2,13 @@
     margin-left: 150px;
     padding: 10px;
 }
+
 .column {
     margin-bottom: 3%;
     margin-top: 3%;
 }
-.column > .card {
+
+.column>.card {
     height: 500px;
     margin-top: 5% !important
 }
@@ -14,23 +16,26 @@
 .filter-container {
     margin: 3% 0;
 }
-.filter-container >.checkbox{
+
+.filter-container>.checkbox {
     margin-left: 5%;
 }
+
 .workout-container, .favorites-container {
     width: 45%;
-
 }
-.workout-container{
+
+.workout-container {
     float: left;
 }
-.favorites-container{
+
+.favorites-container {
     float: right;
 }
+
 .exercises-container {
     float: left !important
 }
-
 
 /* CALENDAR */
 
@@ -38,6 +43,7 @@
     background-color: white;
     border: 1px solid #e1e1e1;
 }
+
 .calendar-header {
     text-transform: uppercase;
     font-size: 0.8em;
@@ -48,8 +54,8 @@
     grid-auto-rows: 50px;
     align-items: center;
     text-align: center;
-  }
-  
+}
+
 .calendar-day {
     border: 1px solid #e1e1e1;
 }
@@ -58,15 +64,30 @@
     padding: 16px;
 }
 
-.calendar-week,.calendar-header {
-  display: grid;
-  grid-template-columns: repeat(7, 1fr);  
-}
-.calendar-week {
-  grid-auto-rows: 100px;
-  text-align: right;
+.calendar-week, .calendar-header {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
 }
 
-.calendar-day > .icon {
+.calendar-week {
+    grid-auto-rows: 100px;
+    text-align: right;
+}
+
+.calendar-day>.icon {
     margin: 0 auto;
+}
+
+.start-container {
+    background-image: url("./images//bgImage.jpg") !important;
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+    width: 100%;
+    height: 100vh;
+}
+.form-login{
+    margin: 0 auto !important;
+    padding-top: 20%;
 }

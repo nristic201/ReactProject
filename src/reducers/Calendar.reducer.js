@@ -1,11 +1,13 @@
-import { ATTACH_TO_CALENDAR } from "../actions/calendar.actions";
+import { ATTACH_TO_CALENDAR_SUCC, LOAD_CALENDAR_ATTACHMENTS, REMOVE_FROM_CALENDAR_SUCC } from "../actions/calendar.actions";
 
-export const CalendarReducer = (state=[],action) =>{
-    console.log('dal')
-    switch(action.type){
-        case ATTACH_TO_CALENDAR:
-            return [...state,action.payload]
-        
-        default : return state
+export const CalendarReducer = (state = [], action) => {
+    switch (action.type) {
+        case ATTACH_TO_CALENDAR_SUCC:
+            return action.payload
+        case LOAD_CALENDAR_ATTACHMENTS:
+            return action.payload
+        case REMOVE_FROM_CALENDAR_SUCC:
+            return action.payload
+        default: return state
     }
 }

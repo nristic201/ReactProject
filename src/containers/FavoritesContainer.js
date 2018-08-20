@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import { WorkOutList } from '../components/WorkOutList';
 import { removeFromFavorites } from '../actions/Favorites.actions';
 import { Popup, Button, Label, Menu } from 'semantic-ui-react';
+import { ShowList } from '../components/ShowList';
 class FavoritesContainer extends Component {
     handleClick = (name) => {
         const { removeFromFavorites, favoritesSaveRequest, favorites } = this.props
@@ -37,14 +38,7 @@ class FavoritesContainer extends Component {
         )
     }
 }
-const ShowList = ({ list }) => {
-    console.log(list)
-    return list.map(el => (
-        <Menu.Item >
-            {el.name}
-        </Menu.Item>
-    ))
-}
+
 const mapStateToProps = (state) => (
     {
         favorites: state.lists.favorites

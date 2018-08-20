@@ -1,29 +1,42 @@
-export const ATTACH_TO_CALENDAR= 'ATTACH_TO_CALENDAR'
-export const SAVE_CALENDAR_ATTACHMENTS_REQ='SAVE_CALENDAR_ATTACHMENTS_REQ'
-export const SAVE_CALENDAR_ATTACHMENTS_SUCC='SAVE_CALENDAR_ATTACHMENTS_SUCC'
+export const ATTACH_TO_CALENDAR_REQ= 'ATTACH_TO_CALENDAR_REQ'
+export const ATTACH_TO_CALENDAR_SUCC= 'ATTACH_TO_CALENDAR_SUCC'
+export const REMOVE_FROM_CALENDAR_REQ= 'REMOVE_FROM_CALENDAR_REQ'
+export const REMOVE_FROM_CALENDAR_SUCC= 'REMOVE_FROM_CALENDAR_SUCC'
 export const LOAD_CALENDAR_ATTACHMENTS='LOAD_CALENDAR_ATTACHMENTS'
 
-export const attachToCalendar = (obj) =>{
+export const attachToCalendarSucc = (arr) =>{
     return {
-        type : ATTACH_TO_CALENDAR,
-        payload: obj
+        type : ATTACH_TO_CALENDAR_SUCC,
+        payload: arr
     }
 } 
-export const saveCalendarAttachmentsReq = (id, data) => {
+export const attachToCalendarReq = (id, data) => {
+    console.log(id,data)
     return {
-        type: SAVE_CALENDAR_ATTACHMENTS_REQ,
+        type: ATTACH_TO_CALENDAR_REQ,
         payload: {
             id: id,
             data: data
         }
     }
 }
-export const saveCalendarAttachmentsSucc  = (data) => {
+export const removeFromCalendarSucc = (obj) =>{
     return {
-        type: SAVE_CALENDAR_ATTACHMENTS_SUCC,
-        payload:data
+        type : REMOVE_FROM_CALENDAR_SUCC,
+        payload: obj
+    }
+} 
+export const removeFromCalendarReq = (id, data) => {
+    return {
+        type: REMOVE_FROM_CALENDAR_REQ,
+        payload: {
+            id: id,
+            data: data
+        }
     }
 }
+
+
 export const loadCalendarAttachments = (data) => {
     return {
         type:LOAD_CALENDAR_ATTACHMENTS,

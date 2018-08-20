@@ -17,21 +17,24 @@ class CalendarContainer extends React.Component {
         for (let i = 1; i <= 31; i++) {
             let date = new Date('2018-08-' + i)
             this.setState(prevState => ({
-                calendar: [...prevState.calendar, date]
+                calendar: [...prevState.calendar, date.toISOString()]
             }))
         }
     }
     renderHeader = () => {
         let array = this.state.calendar.slice(0, 7)
-        return array.map(el =>
-            <div>{this.state.days[(el.getDay())]}</div>
+        return array.map(el =>{
+            let s= new Date(el.slice(0,10))
+            s=s.getDay()
+            return <div>{this.state.days[s-1]}</div>
+        }
         )
     }
     renderDays = () => {
         const ca = this.props.calendarAttachments
         return this.state.calendar.map(el => {
             let p = ca.filter(element => {
-                return element.date.toDateString() === el.toDateString()
+                return element.date.slice(0,10) === el.slice(0,10)
             });
             if (p.length > 0)
                 return <Day data={p[0]}/>
@@ -46,6 +49,7 @@ class CalendarContainer extends React.Component {
     render() {
         return (
             <div className='calendar'>
+                <h1 style={{margin: '0 auto'}}>{this.state.month}</h1>
                 <div className='calendar-header'>{this.renderHeader()}</div>
                 <div className='calendar-week'>{this.renderDays()}</div>
             </div>

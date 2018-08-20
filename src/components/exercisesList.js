@@ -1,6 +1,6 @@
 import React from 'react'
 import { Grid, Container } from 'semantic-ui-react';
-import Exercise from './exercise';
+import Exercise from '../containers/exercise';
 
 export const ExercisesList = ({ list }) => {
     if (list.length === 0)

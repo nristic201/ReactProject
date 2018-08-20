@@ -1,8 +1,9 @@
 
 import React from 'react'
-import { Button, Popup, Menu, Label } from 'semantic-ui-react';
+import { Button, Popup, Menu, Label, Icon } from 'semantic-ui-react';
 import { connect } from 'react-redux'
-import { attachToCalendar } from '../actions/calendar.actions'
+import { attachToCalendarReq, removeFromCalendarReq } from '../actions/calendar.actions'
+import { ShowList } from '../components/ShowList';
 class Day extends React.Component {
     constructor(props) {
         super(props)
@@ -36,35 +37,54 @@ class Day extends React.Component {
             labelStyle: {
                 display: 'block'
             },
-            todayWorkout: element
+            todayWorkout: {
+                date: this.state.todayWorkout.date,
+                ...element
+            }
         },
-            () => this.props.attachToCalendar({
-                ...this.state.todayWorkout,
-                date: this.props.data.date
-            })
+            () => this.props.attachToCalendarReq(
+                this.props.user.id,
+                this.state.todayWorkout
+            )
 
         )
+    }
+    handleClick2 = () => {
+        this.props.removeFromCalendarReq(
+            this.props.user.id,
+            this.state.todayWorkout
+        )
+        this.setState({
+            ...this.state.todayWorkout,
+            buttonStyle: {
+                display: 'block'
+            },
+            labelStyle: {
+                display: 'none'
+            }
+        })
+
     }
     renderList = () => {
         if (this.props.favorites.length > 0) {
             return (
-                this.props.favorites.map(el => (
-                    <Menu.Item name='inbox'>
+                this.props.favorites.map(el => {
+                    return <Menu.Item name='inbox'>
                         {/* promeni arrow */}
                         <Label color='teal' onClick={() => this.handleClick(el)}>Choose</Label>
                         {el.name}
                     </Menu.Item>
-                ))
-            )
+                }))
         }
         else {
             return <h3>empty list</h3>
         }
     }
     render() {
+        let day = this.state.todayWorkout.date.slice(8, 10)
         return (
             <div className='calendar-day'>
-                {this.props.data.date.getDate()}
+                {day}
                 <div className='day-content' >
                     <Popup trigger={<Button content='Add Workout' icon='add' style={this.state.buttonStyle} />}
                         flowing
@@ -72,7 +92,20 @@ class Day extends React.Component {
                     >
                         <Menu vertical>{this.renderList()}</Menu>
                     </Popup>
-                    <Label style={this.state.labelStyle} color='teal' content={this.state.todayWorkout ? this.state.todayWorkout.name : 'none'} />
+
+                    <Popup trigger={
+                        <Label style={this.state.labelStyle} color='teal' >
+                        <Button icon='minus' size='tiny' circular color='blue' onClick={this.handleClick2} />
+                        {this.state.todayWorkout ? this.state.todayWorkout.name : 'none'}
+                        </Label>}
+                        flowing
+                        hoverable
+                    >
+                        <Menu vertical>
+                            <ShowList list={this.state.todayWorkout.list} />
+                        </Menu>
+                    </Popup>
+
                 </div>
             </div >
         )
@@ -80,7 +113,9 @@ class Day extends React.Component {
 }
 const mapStateToProps = (state) => {
     return {
-        favorites: state.lists.favorites
+        favorites: state.lists.favorites,
+        user: state.user,
+        calendarAttachments: state.calendarAttachments
     }
 }
-export default connect(mapStateToProps, { attachToCalendar })(Day)
+export default connect(mapStateToProps, { attachToCalendarReq, removeFromCalendarReq })(Day)
