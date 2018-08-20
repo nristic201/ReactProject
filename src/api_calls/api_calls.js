@@ -97,3 +97,62 @@ export const UpdateDatabaseAfterDEL = async (id, obj) => {
     }
     else return null
 }
+
+
+export const UpdateDatabaseAfterAddFavorite = async (id, obj) => {
+    const userReq = await fetch('http://localhost:4000/users?id=' + id)
+    const userRes = await userReq.json()
+
+    const p = userRes[0].favorites;
+    let pom = p.filter(element => {
+        return element.name === obj.name
+    })
+    if (pom.length > 0)
+        return null
+    if (userRes[0]) {
+        let updateUser = {
+            ...userRes[0],
+            favorites: [...p, obj]
+        }
+
+        const req = await fetch("http://localhost:4000/users/" + id, {
+            method: 'PUT',
+            headers: {
+                'content-type': 'application/json'
+            },
+            body: JSON.stringify(updateUser)
+        })
+        const res = await req.json();
+       
+        return res
+    }
+    else return null
+}
+
+
+
+export const UpdateDatabaseAfterRemoveFav  = async (id, name) => {
+    const userReq = await fetch('http://localhost:4000/users?id=' + id)
+    const userRes = await userReq.json()
+
+    const p = userRes[0].calendarAttachments;
+    let pom = p.filter(el => el.name !== name)
+    if (userRes[0]) {
+        let updateUser = {
+            ...userRes[0],
+            favorites: pom
+        }
+
+        const req = await fetch("http://localhost:4000/users/" + id, {
+            method: 'PUT',
+            headers: {
+                'content-type': 'application/json'
+            },
+            body: JSON.stringify(updateUser)
+        })
+        const res = await req.json();
+        console.log(res)
+        return res
+    }
+    else return null
+}

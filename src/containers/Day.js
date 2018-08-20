@@ -113,7 +113,7 @@ class Day extends React.Component {
 }
 const mapStateToProps = (state) => {
     return {
-        favorites: state.lists.favorites,
+        favorites:state.favorites,
         user: state.user,
         calendarAttachments: state.calendarAttachments
     }

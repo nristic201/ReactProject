@@ -1,30 +1,33 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { WorkOutList } from '../components/WorkOutList';
-import { removeFromFavorites } from '../actions/Favorites.actions';
+import { removeFromFavoritesReq } from '../actions/Favorites.actions';
 import { Popup, Button, Label, Menu } from 'semantic-ui-react';
 import { ShowList } from '../components/ShowList';
 class FavoritesContainer extends Component {
     handleClick = (name) => {
-        const { removeFromFavorites, favoritesSaveRequest, favorites } = this.props
-        removeFromFavorites(name)
+        const { removeFromFavoritesReq,user } = this.props
+        removeFromFavoritesReq(user.id,name)
     }
     renderList = () => {
         if (this.props.favorites.length > 0) {
             return this.props.favorites.map(el => {
                 return (
-                    <Label>
-                        {el.name}
-                        <Popup trigger={<Button content='View' />}
-                            flowing
-                            hoverable
-                        >
-                            <Menu vertical>
-                                <ShowList list={el.list} />
-                            </Menu>
-                        </Popup>
-                        <Button content='remove' onClick={() => this.handleClick(el.name)} />
-                    </Label>)
+
+                    <Popup trigger={
+                        <Label>
+                            {el.name}
+                            <Button content='remove' onClick={() => this.handleClick(el.name)} />
+                        </Label>
+                        }
+                        flowing
+                        hoverable
+                    >
+                        <Menu vertical>
+                            <ShowList list={el.list} />
+                        </Menu>
+                    </Popup>
+                )
             })
         }
     }
@@ -33,7 +36,6 @@ class FavoritesContainer extends Component {
             <div className='favorites-container'>
                 <h2>FavoritesContainer </h2>
                 {this.renderList()}
-                {/* <WorkOutList list={this.props.favorites} /> */}
             </div>
         )
     }
@@ -41,10 +43,11 @@ class FavoritesContainer extends Component {
 
 const mapStateToProps = (state) => (
     {
-        favorites: state.lists.favorites
+        favorites: state.favorites,
+        user:state.user
     }
 )
 
-export default connect(mapStateToProps, {removeFromFavorites })(FavoritesContainer)
+export default connect(mapStateToProps, { removeFromFavoritesReq })(FavoritesContainer)
 
 

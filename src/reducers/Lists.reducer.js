@@ -1,9 +1,7 @@
 import { ADD_EXERCISE, REMOVE_EXERCISE } from "../actions/Workout.actions";
-import { ADD_TO_FAVORITES, LOAD_FAVORITES, REMOVE_FROM_FAVORITES } from "../actions/Favorites.actions";
 import { GYM_FETCH_SUCCESS, FILTER_BY_TYPE, FILTER_BY_NAME } from "../actions/Exercises.actions";
 
 const initialState = {
-    favorites: [],
     workout: [],
     exercises: [],
     filtered: []
@@ -21,14 +19,13 @@ export const ListsReducer = (state = initialState, action) => {
                 return { ...state }
             }
         case REMOVE_EXERCISE:
-            return state.workout.filter(el => (
-                el.id !== action.payload.id
-            ));
-        case ADD_TO_FAVORITES:
             return {
                 ...state,
-                favorites: [...state.favorites, action.payload]
+                workout: state.workout.filter(el => (
+                    el.name !== action.payload
+                ))
             }
+
         case GYM_FETCH_SUCCESS: {
             return {
                 ...state,
@@ -62,7 +59,7 @@ export const ListsReducer = (state = initialState, action) => {
                     if (el.name.includes(action.payload) > 0)
                         return el
                 })
-                console.log(action.payload,a)
+                console.log(action.payload, a)
                 return {
                     ...state,
                     filtered: a
@@ -73,18 +70,7 @@ export const ListsReducer = (state = initialState, action) => {
                 filtered: state.exercises
             }
         }
-        case LOAD_FAVORITES:{
-            return {
-                ...state,
-                favorites:action.payload
-            }
-        }
-        case REMOVE_FROM_FAVORITES:{
-            return {
-                ...state,
-                favorites:state.favorites.filter(el=>el.name!==action.payload)
-            }
-        }
+
         default: return state;
     }
 }

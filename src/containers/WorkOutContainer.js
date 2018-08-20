@@ -1,12 +1,13 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { WorkOutList } from '../components/WorkOutList'
-import { addToFavorites, favoritesSaveRequest } from '../actions/Favorites.actions';
+import WorkOutList from '../components/WorkOutList'
+import { addToFavoritesReq } from '../actions/Favorites.actions';
 import { Button, Input, Message } from 'semantic-ui-react';
 import FavoritesContainer from './FavoritesContainer';
 import ExercisesContainer from './ExercisesContainer';
 import FilterContainer from './FilterContainer';
 import { attachToCalendarReq } from '../actions/calendar.actions'
+import { removeExercise } from '../actions/Workout.actions'
 
 class WorkOutContainer extends React.Component {
     constructor() {
@@ -33,8 +34,12 @@ class WorkOutContainer extends React.Component {
     }
     handleClick = () => {
         if (this.preventEmpty()) {
-            const { user, favorites, workout, favoritesSaveRequest, addToFavorites } = this.props
-            addToFavorites(workout, this.state.name)
+            const { workout, addToFavoritesReq, user } = this.props
+            const obj = {
+                name: this.state.name,
+                list: workout
+            }
+            addToFavoritesReq(user.id, obj)
             this.setState({
                 error: null
             })
@@ -60,6 +65,9 @@ class WorkOutContainer extends React.Component {
             name: e.target.value
         })
     }
+    handleClick3 = (name) => {
+        this.props.removeExercise(name)
+    }
     render() {
         return (
             <div>
@@ -73,7 +81,7 @@ class WorkOutContainer extends React.Component {
                                 {this.state.error}
                             </Message>}
                         </span>
-                        <WorkOutList list={this.props.workout} />
+                        <WorkOutList list={this.props.workout} onClick={this.handleClick3} />
                         <Button onClick={this.handleClick} content='Save To Favorites' />
                         <Button onClick={this.handleClick2} content='Attach To Calendar' />
                         {/* <CustomModal list={this.props.workout} confirm={this.handleClick2} /> */}
@@ -90,9 +98,9 @@ const mapStateToProps = (state) => {
     return {
         workout: state.lists.workout,
         user: state.user,
-        favorites: state.lists.favorites,
+        favorites: state.favorites,
         calendarAttachments: state.calendarAttachments
     }
 }
 
-export default connect(mapStateToProps, { addToFavorites, attachToCalendarReq, favoritesSaveRequest })(WorkOutContainer)
+export default connect(mapStateToProps, { addToFavoritesReq, attachToCalendarReq, removeExercise })(WorkOutContainer)

@@ -15,7 +15,6 @@ class Exercise extends React.Component {
         this.props.addExercise(obj)
     }
     render() {
-        console.log(this.props)
         return (
                 <ExerciseDisplay data={this.props.data} onClick={this.handleClick} />
             )
