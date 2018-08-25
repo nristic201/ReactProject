@@ -11,7 +11,6 @@ export const attachToCalendarSucc = (arr) =>{
     }
 } 
 export const attachToCalendarReq = (id, data) => {
-    console.log(id,data)
     return {
         type: ATTACH_TO_CALENDAR_REQ,
         payload: {

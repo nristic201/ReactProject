@@ -34,29 +34,21 @@ export const ListsReducer = (state = initialState, action) => {
             }
         }
         case FILTER_BY_TYPE:
-            if (action.payload === '') {
+            {
+                if (action.payload === 'reset')
+                    return {
+                        ...state,
+                        filtered: state.exercises
+                    }
                 return {
                     ...state,
-                    filtered: state.exercises
-                }
-            }
-            else { //S OBIZROM DA JE SVAKA VEZBA JEDNOG TIPA OVO MOZE DA PRODJE
-                console.log(action.payload)
-                let array = [];
-                // action.payload.forEach(element => {
-                //     console.log(element)
-                array = state.exercises.filter(el => el.type === action.payload)
-                //     console.log(array)
-                // });
-                return {
-                    ...state,
-                    filtered: array
+                    filtered: state.exercises.filter(el => el.type === action.payload)
                 }
             }
         case FILTER_BY_NAME: {
             if (action.payload.length > 0) {
                 const a = state.exercises.filter(el => {
-                    if (el.name.includes(action.payload) > 0)
+                    if (el.name.toLowerCase().includes(action.payload.toLowerCase()) > 0)
                         return el
                 })
                 console.log(action.payload, a)

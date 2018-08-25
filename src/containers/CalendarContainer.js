@@ -23,10 +23,12 @@ class CalendarContainer extends React.Component {
     }
     renderHeader = () => {
         let array = this.state.calendar.slice(0, 7)
+        console.log(array)
         return array.map(el =>{
             let s= new Date(el.slice(0,10))
             s=s.getDay()
-            return <div>{this.state.days[s-1]}</div>
+            console.log(this.state.days[s])
+            return <div>{this.state.days[s]}</div>
         }
         )
     }

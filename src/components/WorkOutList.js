@@ -9,7 +9,7 @@ export default class WorkOutList extends React.Component{
                     {this.props.list.map(el => (
                         <Menu.Item >
                             {el.name}
-                            <Button size='tiny' onClick={()=>this.props.onClick(el.name)}/>
+                            <Button size='tiny' icon='minus' onClick={()=>this.props.onClick(el.name)}/>
                         </Menu.Item>
                     ))}
                 </Menu>

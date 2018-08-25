@@ -1,6 +1,6 @@
 import React from 'react'
-import { Input } from 'semantic-ui-react';
-import {filterByType, filterByName } from '../actions/Exercises.actions'
+import { Input, Menu } from 'semantic-ui-react';
+import { filterByType, filterByName } from '../actions/Exercises.actions'
 import { connect } from 'react-redux'
 
 class FilterContainer extends React.Component {
@@ -12,7 +12,11 @@ class FilterContainer extends React.Component {
         this.timer = 0
 
     }
-
+    handleClick = (ev) => {
+        const text=ev.target.innerHTML
+        console.log(ev.target.innerHTML)
+        this.props.filterByType(text)
+    }
     handleSearch = (e) => {
         const { value } = e.target
         clearTimeout(this.timer)
@@ -24,25 +28,26 @@ class FilterContainer extends React.Component {
     render() {
         return (
             <div className='filter-container'>
-                {/* <Checkbox
-                        toggle
-                        label='back'
-                        value='back'
-                        checked={this.state.checked}
-                        onChange={this.handleChange}
-                    />
-                    <Checkbox
-                        toggle
-                        value='chest'
-                        label='chest'
-                        checked={this.state.checked}
-                        onChange={this.handleChange}
-                    /> */}
-                <Input
-                    icon='users'
-                    iconPosition='left'
-                    placeholder='Search exercises...'
-                    onKeyUp={this.handleSearch} />
+                <Menu secondary>
+                    <Menu.Item><Input
+                        icon='users'
+                        iconPosition='left'
+                        placeholder='Search exercises...'
+                        onKeyUp={this.handleSearch} />
+                    </Menu.Item>
+                    <Menu.Item  onClick={this.handleClick}>
+                        back
+                    </Menu.Item >
+                    <Menu.Item onClick={this.handleClick}>
+                        chest
+                    </Menu.Item>
+                    <Menu.Item onClick={this.handleClick} >
+                        biceps
+                    </Menu.Item>
+                    <Menu.Item onClick={this.handleClick} >
+                        reset
+                    </Menu.Item>
+                </Menu>
             </div>
         )
     }

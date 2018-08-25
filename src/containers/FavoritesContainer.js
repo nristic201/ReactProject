@@ -34,7 +34,7 @@ class FavoritesContainer extends Component {
     render() {
         return (
             <div className='favorites-container'>
-                <h2>FavoritesContainer </h2>
+                <h2>Favorites </h2>
                 {this.renderList()}
             </div>
         )
